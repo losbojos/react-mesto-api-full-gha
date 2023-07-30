@@ -1,0 +1,8 @@
+.login__text_link {
+    /* Войти */
+    text-decoration: none;
+}
+
+.login__text_link:hover {
+    color: #A9A9A9;
+}

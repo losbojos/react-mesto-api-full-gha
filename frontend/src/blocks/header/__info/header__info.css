@@ -1,0 +1,31 @@
+/* Информация о пользователе в шапке: email */
+
+
+/* FIGMA 320 design (default) */
+.header__info {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height, or 122% */
+
+    color: #FFFFFF;
+    padding: 0;
+
+    text-align: center;
+    margin: auto;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .header__info {
+        text-align: right;
+        margin: auto 12px;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .header__info {}
+}

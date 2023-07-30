@@ -1,0 +1,27 @@
+.login__input {
+    /* Email & password */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+
+    border: none;
+    border-bottom: 2px solid #CCCCCC;
+    background-color: black;
+    color: white;
+
+    outline: none;
+    padding: 0 0 9px;
+    width: 100%;
+    margin: 0;
+}
+
+.login__input:not(:first-of-type) {
+    margin-top: 30px;
+}
+
+.login__input::placeholder {
+    color: #CCCCCC;
+}

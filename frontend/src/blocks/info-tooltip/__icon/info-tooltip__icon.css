@@ -1,0 +1,23 @@
+/* FIGMA 320 design (default) */
+.info-tooltip__icon {
+    width: 120px;
+    height: 120px;
+    background: #000000;
+
+    margin: 50px auto 0;
+    background-color: transparent;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .info-tooltip__icon {
+        margin: 55px auto 0;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .info-tooltip__icon {
+        margin: 60px auto 0;
+    }
+}

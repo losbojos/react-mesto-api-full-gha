@@ -1,0 +1,26 @@
+/* FIGMA 320 design (default) */
+.profile__about {
+    margin: 9px 0 0;
+    max-width: 100%;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .profile__about {
+        margin: 10px 0 0;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .profile__about {
+        font-size: 18px;
+        line-height: 22px;
+        text-align: left;
+    }
+}

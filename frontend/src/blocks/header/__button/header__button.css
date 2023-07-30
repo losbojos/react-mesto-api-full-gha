@@ -1,0 +1,42 @@
+/* Кнопки в шапке в зависимости от текущей страницы: Войти\Выйти\Регистрация */
+
+
+/* FIGMA 320 design (default) */
+.header__button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    margin: 6px 0 0;
+    padding: 0;
+
+    text-align: right;
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    color: #FFFFFF;
+
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.header__button:hover {
+    color: #A9A9A9;
+}
+
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .header__button {
+        font-size: 16px;
+        line-height: 20px;
+        margin: auto 0 auto 12px;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .header__button {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}

@@ -1,0 +1,28 @@
+/* FIGMA 320 design (default) */
+.login__text {
+    /* Уже зарегистрированы? Войти*/
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+
+    text-align: center;
+
+    color: #FFFFFF;
+    margin: 20px 0 0;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .login__text {
+        margin: 17px 0 0;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .login__text {
+        margin: 15px 0 0;
+    }
+}

@@ -1,0 +1,18 @@
+/* FIGMA 320 design (default) */
+.header__logo {
+    max-width: 142px;
+    max-height: 33px;
+
+    width: 32.41875vw;
+    margin: 0;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin: 0;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {}

@@ -1,0 +1,21 @@
+/* FIGMA 320 design (default) */
+.login__inputs {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 30px 0;
+    align-items: stretch;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .login__inputs {
+        margin: 45px 0 0;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .login__inputs {
+        margin: 50px 0 0;
+    }
+}

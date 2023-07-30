@@ -1,0 +1,9 @@
+.profile__avatar {
+    max-width: 120px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #C4C4C4;
+}

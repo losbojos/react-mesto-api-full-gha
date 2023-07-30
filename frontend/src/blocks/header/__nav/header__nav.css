@@ -1,0 +1,25 @@
+/* FIGMA 320 design (default) */
+.header__nav {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+    padding: 5px 0;
+    align-items: center;
+
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .header__nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-self: end;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .header__nav {}
+}

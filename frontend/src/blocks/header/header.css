@@ -1,0 +1,29 @@
+/* FIGMA 320 design (default) */
+.header {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 28px 30px;
+
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* NO FIGMA design */
+@media screen and (min-width: 768px) {
+    .header {
+        padding: 38px 30px;
+    }
+}
+
+/* FIGMA 1280 */
+@media screen and (min-width: 1024px) {
+    .header {
+        padding: 43px 0 40px;
+    }
+}
