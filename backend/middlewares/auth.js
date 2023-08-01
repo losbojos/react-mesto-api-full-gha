@@ -2,11 +2,15 @@ const jwt = require('jsonwebtoken');
 const { AuthError } = require('../errors/AuthError');
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+function getSecretKey() {
+  const DEV_JWT_SECRET = 'somethingverysecret-sdfsadfasdfsadflak';
+  const { NODE_ENV, JWT_SECRET } = process.env;
+  return (NODE_ENV === 'production') ? JWT_SECRET : DEV_JWT_SECRET;
+}
 
 const getJwtToken = (id) => jwt.sign(
   { _id: id },
-  NODE_ENV === 'production' ? JWT_SECRET : 'somethingverysecret-sdfsadfasdfsadflak',
+  getSecretKey(),
   { expiresIn: '1w' }, // токен будет просрочен через неделю
 );
 
@@ -26,7 +30,7 @@ const checkJwtToken = (req, res, next) => {
   if (!token) {
     next(new AuthError('Токен не передан или передан не в том формате'));
   } else {
-    jwt.verify(token, JWT_SECRET, (err, payload) => {
+    jwt.verify(token, getSecretKey(), (err, payload) => {
       if (err) {
         next(new AuthError(err));
       }
