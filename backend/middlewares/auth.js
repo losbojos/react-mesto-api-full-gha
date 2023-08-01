@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 const { AuthError } = require('../errors/AuthError');
 const User = require('../models/user');
 
-const JWT_SECRET = 'somethingverysecret-sdfsadfasdfsadflak';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getJwtToken = (id) => jwt.sign(
   { _id: id },
-  JWT_SECRET,
+  NODE_ENV === 'production' ? JWT_SECRET : 'somethingverysecret-sdfsadfasdfsadflak',
   { expiresIn: '1w' }, // токен будет просрочен через неделю
 );
 

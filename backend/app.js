@@ -1,10 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const process = require('process');
+const dotenv = require('dotenv');
 const { addMiddlewares } = require('./routes/index');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+// Добавляем переменные окружения из файла .env,
+// который должен присутствовать только на физическом сервере, не в репозитории.
+dotenv.config();
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb', { useNewUrlParser: true });
