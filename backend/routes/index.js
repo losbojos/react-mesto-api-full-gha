@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
@@ -13,6 +14,11 @@ const { requestLogger, errorLogger } = require('../middlewares/logger');
 
 // подключаем мидлвары, роуты и всё остальное...
 const addMiddlewares = (app) => {
+  app.use(cors({
+    origin: ['http://localhost:3005', 'http://losbojos.mesto.nomoreparties.co'],
+    credentials: true,
+  }));
+
   app.use(express.json());
 
   // Логгер запросов нужно подключить до всех обработчиков роутов:

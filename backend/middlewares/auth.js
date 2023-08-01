@@ -11,25 +11,35 @@ const getJwtToken = (id) => jwt.sign(
 );
 
 const checkJwtToken = (req, res, next) => {
-  const token = req.cookies.jwt; // Ищем токен в куке
+  // const token = req.cookies.jwt; // Ищем токен в куке
+  const { authorization } = req.headers;
 
-  if (!token) {
-    next(new AuthError('Требуется аутентификация'));
+  if (!authorization) {
+    next(new AuthError('Требуется авторизация'));
   }
 
-  jwt.verify(token, JWT_SECRET, (err, payload) => {
-    if (err) {
-      next(new AuthError());
-    }
+  let token = null;
+  if (authorization.startsWith('Bearer ')) {
+    token = authorization.replace('Bearer ', '');
+  }
 
-    User.findById(payload._id)
-      .orFail(new AuthError())
-      .then(() => {
-        req.user = { _id: payload._id }; // записываем пейлоуд в объект запроса
-        next(); // пропускаем запрос дальше
-      })
-      .catch(next);
-  });
+  if (!token) {
+    next(new AuthError('Токен не передан или передан не в том формате'));
+  } else {
+    jwt.verify(token, JWT_SECRET, (err, payload) => {
+      if (err) {
+        next(new AuthError(err));
+      }
+
+      User.findById(payload._id)
+        .orFail(new AuthError('Пользователь не найден'))
+        .then(() => {
+          req.user = { _id: payload._id }; // записываем пейлоуд в объект запроса
+          next(); // пропускаем запрос дальше
+        })
+        .catch(next);
+    });
+  }
 };
 
 module.exports = { getJwtToken, checkJwtToken };

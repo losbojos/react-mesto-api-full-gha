@@ -1,11 +1,14 @@
-import { serverUrl, myToken, REST_METHODS } from './Consts.js';
+import { SERVER_URL, REST_METHODS, authHeader } from './Consts.js';
 
 const urls = { usersMe: '/users/me', avatar: '/avatar', cards: '/cards', likes: '/likes' };
 
 class CardsApi {
-    constructor({ baseUrl, token }) {
-        this.baseUrl = baseUrl;
-        this.token = token;
+    constructor(baseUrl) {
+        this._baseUrl = baseUrl;
+    }
+
+    setToken(token) {
+        this._token = token;
     }
 
     getUserInfo() {
@@ -42,18 +45,19 @@ class CardsApi {
 
     _requestServer(urlAddition, method, bodyObject = null) {
         const myHeaders = new Headers();
-        myHeaders.append("authorization", this.token);
+        myHeaders.append([authHeader], `Bearer ${this._token}`);
         myHeaders.append("Content-Type", "application/json");
 
         const requestOptions = {
             method: method,
-            headers: myHeaders
+            credentials: "include",
+            headers: myHeaders,
         };
 
         if (bodyObject)
             requestOptions.body = JSON.stringify(bodyObject);
 
-        return fetch(this.baseUrl + urlAddition, requestOptions)
+        return fetch(this._baseUrl + urlAddition, requestOptions)
             .then(response => {
                 if (response.ok)
                     return response.json();
@@ -64,9 +68,6 @@ class CardsApi {
     }
 }
 
-const cardsApiInstance = new CardsApi({
-    baseUrl: serverUrl,
-    token: myToken
-});
+const cardsApiInstance = new CardsApi(SERVER_URL);
 
 export default cardsApiInstance;

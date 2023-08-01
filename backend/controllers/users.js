@@ -124,11 +124,23 @@ const login = (req, res, next) => {
             } else {
               const token = getJwtToken(user._id);
 
-              res.cookie(JWT_COOKIE, token, {
-                maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
-                httpOnly: true,
-              })
-                .status(200).send({ token });
+              res
+                // .cookie(JWT_COOKIE, token, {
+                //   maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+                //   httpOnly: true,
+                //   secure: true,
+                //   sameSite: 'none', // 'strict'
+                // })
+                .status(200).send({
+                  token,
+                  user: {
+                    _id: user._id,
+                    name: user.name,
+                    about: user.about,
+                    avatar: user.avatar,
+                    email: user.email,
+                  },
+                });
             }
           })
           .catch(next);

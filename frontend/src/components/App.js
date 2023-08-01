@@ -45,6 +45,12 @@ function App() {
     handleInfoTooltip(error, errorIcon, afterClose);
   }
 
+  const updateAuthorizationData = (isLoggedIn, newUserData, newToken) => {
+    cardsApiInstance.setToken(newToken);
+    setAuthorizationContext({ loggedIn: isLoggedIn, email: newUserData.email, token: newToken });
+    setCurrentUser(newUserData);
+  }
+
   // Текущий контекст авторизаци
   const [authorizationContext, setAuthorizationContext] = useState(
     { loggedIn: false, email: '', token: '' } // Данные о текущем авторизованном пользователе
@@ -54,11 +60,9 @@ function App() {
 
     authorizationApiInstance.authorize({ email, password })
       .then(data => {
-        if (data.token) {
-          localStorage.setItem(tokenStorageKey, data.token);
-          setAuthorizationContext({ loggedIn: true, email: email, token: data.token });
-          navigate(PAGES.MAIN);
-        }
+        localStorage.setItem(tokenStorageKey, data.token);
+        updateAuthorizationData(true, data.user, data.token);
+        navigate(PAGES.MAIN);
       })
       .catch(err => errorHandler(err));
   }
@@ -77,7 +81,8 @@ function App() {
     localStorage.removeItem(tokenStorageKey);
 
     // удаление данных пользователя
-    setAuthorizationContext({ loggedIn: false, email: '', token: '' });
+    updateAuthorizationData(false, { _id: -1, email: '', name: '', about: '', avatar: '' }, '');
+
     navigate(PAGES.LOGIN);
   }
 
@@ -86,8 +91,8 @@ function App() {
 
     if (localToken) {
       authorizationApiInstance.getContent(localToken)
-        .then(data => {
-          setAuthorizationContext({ loggedIn: true, email: data.data.email, token: localToken });
+        .then(user => {
+          updateAuthorizationData(true, user, localToken);
           navigate(PAGES.MAIN);
         })
         .catch(error => errorHandler(error));
@@ -108,26 +113,16 @@ function App() {
     avatar: '' // Аватар
   });
 
-
   useEffect(() => {
-    cardsApiInstance.getUserInfo()
-      .then(data => {
-        setCurrentUser(data);
-      })
-      .catch(error => errorHandler(error));
-  }
-    , [] // Пустой массив = Эффект не зависит ни от чего = выполняется 1 раз при монтировании
-  );
-
-  useEffect(() => {
-    if (!currentUser || currentUser._id === -1)
+    if (!currentUser || currentUser._id === -1) {
       setCards([]); // Пока не залогинились - пустой набор карточек
-    else
+    } else {
       cardsApiInstance.getCards()
         .then(result => {
           setCards(result);
         })
         .catch(error => errorHandler(error));
+    }
   }
     , [currentUser] // Запрашиваем карточки после логина пользователя
   );

@@ -4,19 +4,17 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function checkLiked(card, currentUserId) {
     return card.likes.some((like) => {
-        return (like._id === currentUserId);
+        return (like === currentUserId);
     });
 }
 
 function Card(props) {
-
     const currentUser = useContext(CurrentUserContext); // Текущий пользователь в глобальном контексте
     const caption = props.name; // Заголовок изображения
     const imageLink = props.link; // Ссылка на изображение
     const isLiked = checkLiked(props, currentUser._id); // Лайкнута мною?
-    const isOwnCard = (currentUser._id === props.owner._id); // Это моя карточка?
+    const isOwnCard = (currentUser._id === props.owner); // Это моя карточка?
     const likesNumber = props.likes.length; // Количество лайков
-
     const buttonLikeClasses = `cards__like cursor-pointer ${isLiked && "cards__like_liked"}`;
     const altValue = `фотография ${caption} `;
 

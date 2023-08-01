@@ -1,4 +1,4 @@
-import { REST_METHODS, AUTHORIZATION_SERVER_URL } from './Consts.js';
+import { REST_METHODS, SERVER_URL, authHeader } from './Consts.js';
 
 class AuthorizationApi {
 
@@ -6,9 +6,17 @@ class AuthorizationApi {
         this.baseUrl = baseUrl;
     }
 
-    _processError(res, conversionMap) {
-        const val = conversionMap[res.status];
-        const errorInfo = val ? val : res.statusText;
+    async _processError(res, conversionMap = null) {
+        let errorInfo = res.statusText;
+        if (conversionMap && conversionMap[res.status])
+            errorInfo = conversionMap[res.status];
+        if (res.body) {
+            const jsonObj = await res.json();
+            if (jsonObj && jsonObj.message) {
+                errorInfo = jsonObj.message;
+            }
+        }
+
         return Promise.reject(`Ошибка ${res.status}: ${errorInfo}`);
     }
 
@@ -23,16 +31,14 @@ class AuthorizationApi {
             .then(
                 res =>
                     res.ok ? res.json() :
-                        this._processError(res,
-                            {
-                                400: "Некорректно заполнено одно из полей",
-                            })
+                        this._processError(res)
             );
     };
 
     authorize({ email, password }) {
         return fetch(`${this.baseUrl}/signin`, {
             method: REST_METHODS.POST,
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -41,40 +47,29 @@ class AuthorizationApi {
             .then(
                 res =>
                     res.ok ? res.json() :
-                        this._processError(res,
-                            {
-                                400: "Не передано одно из полей",
-                                401: "Пользователь с указанным email не найден"
-                            })
+                        this._processError(res)
             );
     };
 
     getContent(token) {
         return fetch(`${this.baseUrl}/users/me`, {
             method: REST_METHODS.GET,
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`,
+                [authHeader]: `Bearer ${token}`,
             },
         })
             .then(
                 res =>
                     res.ok ? res.json() :
-                        this._processError(res,
-                            {
-                                // Если токен не передан или передан без Bearer
-                                400: "Токен не передан или передан не в том формате",
-
-                                // Если передан некорректный токен
-                                401: "Переданный токен некорректен"
-
-                            })
+                        this._processError(res)
             );
     };
 }
 
 const authorizationApiInstance = new AuthorizationApi({
-    baseUrl: AUTHORIZATION_SERVER_URL
+    baseUrl: SERVER_URL
 });
 
 export default authorizationApiInstance;
