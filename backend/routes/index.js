@@ -15,7 +15,7 @@ const { requestLogger, errorLogger } = require('../middlewares/logger');
 // подключаем мидлвары, роуты и всё остальное...
 const addMiddlewares = (app) => {
   app.use(cors({
-    origin: ['http://localhost:3005', 'http://losbojos.mesto.nomoreparties.co'],
+    origin: ['https://localhost:3005', 'https://losbojos.mesto.nomoreparties.co'],
     credentials: true,
   }));
 
