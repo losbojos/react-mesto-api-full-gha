@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.85.65
+IP 51.250.85.65
 
 Frontend https://losbojos.mesto.nomoreparties.co
 
