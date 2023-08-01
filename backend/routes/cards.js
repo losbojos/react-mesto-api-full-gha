@@ -6,6 +6,12 @@ const {
   createCard, getCards, getCard, deleteCard, likeCard, dislikeCard,
 } = require('../controllers/cards');
 
+const celebrateCardId = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
+
 router.post(
   '/',
   celebrate({
@@ -21,43 +27,27 @@ router.get('/', getCards);
 
 router.get(
   '/:cardId',
-  celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  }),
+  celebrateCardId,
   getCard,
 );
 
 router.delete(
   '/:cardId',
-  celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  }),
+  celebrateCardId,
   deleteCard,
 );
 
 // поставить лайк карточке
 router.put(
   '/:cardId/likes',
-  celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  }),
+  celebrateCardId,
   likeCard,
 );
 
 // убрать лайк с карточки
 router.delete(
   '/:cardId/likes',
-  celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  }),
+  celebrateCardId,
   dislikeCard,
 );
 
