@@ -71,7 +71,13 @@ const getById = (userId, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new InvalidDataError(`Ошибка конвертации: ${err.message}`));
+      } else {
+        next(err);
+      }
+    });
 };
 
 const getUser = (req, res, next) => {
