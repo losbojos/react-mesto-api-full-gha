@@ -15,7 +15,7 @@ function Header({ handleLogout }) {
 
     return (
         <header className="header">
-            <img className="header__logo" src={imageHeaderLogo} alt="Логотоп" />
+            <img className="header__logo" src={imageHeaderLogo} alt="логотип" />
             <nav className="header__nav">
                 {isLogged &&
                     (
