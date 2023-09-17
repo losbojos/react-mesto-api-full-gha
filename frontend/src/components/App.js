@@ -41,8 +41,14 @@ function App() {
   const errorHandler = (error, afterClose = null) => {
     console.log(error);
 
+    let errorMessage = 'Произошла ошибка';
+    if (typeof error === 'string' || error instanceof String)
+      errorMessage = error;
+    else if (typeof error.message === 'string' || error.message instanceof String)
+      errorMessage = error.message;
+
     //alert(error);
-    handleInfoTooltip(error, errorIcon, afterClose);
+    handleInfoTooltip(errorMessage, errorIcon, afterClose);
   }
 
   const updateAuthorizationData = (isLoggedIn, newUserData, newToken) => {
