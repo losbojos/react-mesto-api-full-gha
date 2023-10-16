@@ -30,3 +30,10 @@
 + Защищенные роуты
 + Бэкенд: Express.js, MongoDB, REST API, Nginx.
   
+## Системные требования
+* Редактор кода [Visual Studio Code](https://code.visualstudio.com) или другой
+* Система контроля версий [Git](https://git-scm.com/downloads)
+* Браузер Chrome, Firefox или др.
+* Среда исполнения [Node.js](https://nodejs.org/en/download/package-manager) для сервера
+* Документоориентированная [система управления базами данных MongoDB](https://www.mongodb.com/docs/manual/installation/) для сервера.
+  
